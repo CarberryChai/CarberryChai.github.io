@@ -7,7 +7,7 @@
 
     
 
-    <title>Hexo</title>
+    <title>Carberry</title>
     <meta name="author" content="John Doe" />
     <meta name="version" content="1.0.0" />
     <meta name="keywords" content="" />
@@ -177,13 +177,15 @@
 <h3 id="scrollHeight"><a href="#scrollHeight" class="headerlink" title="scrollHeight"></a>scrollHeight</h3><blockquote>
 <p>1、包含滚动内容的元素大小<br>2、一个元素内容高度的度量，包括由于溢出导致的视图中不可见内容。</p>
 </blockquote>
-<p>一般指的是有滚动条的（<code>overflow:scroll</code>）的元素大小，如果元素内容的大小小于等于容器的大小，<code>scrollHeight</code>等于<code>clientHeight</code><br><img src="/2018/08/18/infinite-scroll/3.jpg" title="滚动大小"></p>
-<h3 id="无限滚动"><a href="#无限滚动" class="headerlink" title="无限滚动"></a>无限滚动</h3><p>以<code>vue</code>框架为例讲解无限滚动, 安装vue-cli脚手架<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm i -g @vue/cli</span><br><span class="line">vue create scroll-demo</span><br><span class="line">npm serve</span><br></pre></td></tr></table></figure></p>
-<p>主要代码如下：<br><img src="/2018/08/18/infinite-scroll/carbon.png" title="源码"><br>核心代码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'scroll'</span>, () =&gt; &#123;</span><br><span class="line">   <span class="keyword">const</span> el = <span class="built_in">document</span>.documentElement</span><br><span class="line">   <span class="keyword">if</span> (el.scrollTop + <span class="built_in">window</span>.innerHeight &gt;= el.scrollHeight * <span class="number">0.8</span>) &#123;</span><br><span class="line">       <span class="keyword">this</span>.fetchList()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure></p>
-<p>其实就是当滚动距离<code>scrollTop</code> + 整个屏幕的可是高度大于等于根元素的滚动高度（其实就是整个网页的高度），就去发送Ajax请求，在请求还未完成之时，如果还有滚动行为，此时也满足<code>el.scrollTop + window.innerHeight &gt;= el.scrollHeight * 0.8</code>就会一直触发Ajax请求，有时短时间内会触发几十个请求，我们需要阻止持续的请求。<br>很简单，加个开关，其实跟门上加个锁一样，我进来了就把门锁上，这样其他人进不来，等我出来了再把门打开。这里，我们加了<code>loading</code>，当请求还未完成时，我们设置<code>loading = true</code>，显示‘请稍后……’的提示语，在这段时间还有请求过来，我们就什么也不做返回。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="keyword">this</span>.loading || <span class="keyword">this</span>.endFlag)&#123;</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这样就解决了满足<code>el.scrollTop + window.innerHeight &gt;= el.scrollHeight * 0.8</code>只会发送一次请求。<br>最后，结束的时候，最后一页，相同的情况，再加个开关<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="built_in">Math</span>.ceil(data.count / <span class="keyword">this</span>.pageSize) === <span class="keyword">this</span>.cpage) &#123;</span><br><span class="line">         <span class="keyword">this</span>.endFlag = <span class="literal">true</span></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
-<p>总数量除以每页请求的数量等于当前页，就表示是最后一页了，此时我们<code>this.endFlag = true</code>阻止后续的请求，同时告诉用户‘已经到底啦~’<br>最后，无限滚动是每个前端童鞋都必须掌握的，很常用，这篇算是个人的一点小小总结吧!😁😁😁</p>
-
+<p>一般指的是有滚动条的（<code>overflow:scroll</code>）的元素大小，如果元素内容的大小小于等于容器的大小，<code>scrollHeight</code>等于<code>clientHeight</code><br><img src="/2018/08/18/infinite-scroll/3.jpg" title="滚动大小"><br>
+        
+        <p class="article-more-link">
+            <a href="/2018/08/18/infinite-scroll/#more">
+                <span class="vm">阅读更多</span>
+                <i class="icon-arrow-double-right vm"></i>    
+            </a>
+        </p>
+        
         
     </section>
 </article>
