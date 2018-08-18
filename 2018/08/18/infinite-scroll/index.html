@@ -1,190 +1,213 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  
+    <meta charset="UTF-8" />
 
-  
-  <title>infinite-scroll | Hexo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="人生不只眼前的苟且，还有诗和远方。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="infinite-scroll">
-<meta property="og:url" content="http://yoursite.com/2018/08/18/infinite-scroll/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="人生不只眼前的苟且，还有诗和远方。">
-<meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-08-18T01:24:56.936Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="infinite-scroll">
-<meta name="twitter:description" content="人生不只眼前的苟且，还有诗和远方。">
-  
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-  
-  
+    
+
+    
+
+    <title>无限滚动 | Hexo</title>
+    <meta name="author" content="John Doe" />
+    <meta name="version" content="1.0.0" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="无限滚动常常用于移动端，是pc端分页在移动端的实现。讲无限滚动之前先了解一下元素的尺寸，之前我经常搞混offsetHeight、clientWidth、scrollHeight等之间的关系。
+offsetHeight
+1、元素在垂直方向上占据的空间大小（红宝书）2、一种元素CSS高度的衡量标准，包括元素的边框、内边距和元素的水平滚动    条（如果存在且渲染的话），不包含:before或:after等伪类元素的高度。
+
+表示元素在屏幕上占据的可见的空间（个人认为是容器的大小）
+clientWid" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+    <meta name="baidu-site-verification" content="F0CXvmUgA9" />
+
+    
+    
     <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link rel="stylesheet" href="/css/style.css">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
 </head>
-
 <body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
+
+    <div class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <button id="open-panel" class="open-panel"><i class="icon-library"></i></button>
+
+    <nav class="nav-inner">
+
         
-          <a class="main-nav-link" href="/">Home</a>
         
-          <a class="main-nav-link" href="/archives">Archives</a>
+        <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+        </li>
         
-      </nav>
-      <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
-      </div>
+        <li class="nav-item">
+            <a class="nav-link" href="/categories/front-end">前端</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/back-end">后端</a>
+        </li>
+        
+        
+        
+        <li class="nav-item nav-item-tag">
+            <a id="nav-tag" class="nav-link" href="#">标签</a>
+            <div id="nav-tags" class="nav-tag-wrap">
+                <i class="nav-tag-arrow"></i>
+                
+  <div class="widget-wrap">
+    <h3 class="widget-title">
+        <i class="icon-tag vm"></i>
+        <span class="vm">Tags</span>
+    </h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
     </div>
   </div>
+
+
+            </div>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/archives">归档</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/atom.xml">订阅</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+            <a class="nav-link" href="/about">关于</a>
+        </li>
+        
+        
+        
+
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#offsetHeight"><span class="toc-number">1.</span> <span class="toc-text">offsetHeight</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#clientWidth"><span class="toc-number">2.</span> <span class="toc-text">clientWidth</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#scrollHeight"><span class="toc-number">3.</span> <span class="toc-text">scrollHeight</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#无限滚动"><span class="toc-number">4.</span> <span class="toc-text">无限滚动</span></a></li></ol>
+        
+    </div>
+</aside>
+
 </header>
-      <div class="outer">
-        <section id="main"><article id="post-infinite-scroll" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/08/18/infinite-scroll/" class="article-date">
-  <time datetime="2018-08-18T01:23:54.000Z" itemprop="datePublished">2018-08-18</time>
-</a>
+
+        <div id="content" class="content"><article class="article" itemscope itemprop="blogPost">
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+    <header class="article-header">
         
-  
-    <h1 class="article-title" itemprop="name">
-      infinite-scroll
-    </h1>
-  
-
-      </header>
+        <h1 itemprop="name">
+            无限滚动
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="/2018/08/18/infinite-scroll/">
     
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>人生不只眼前的苟且，还有诗和远方。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/08/18/infinite-scroll/" data-id="cjkyqqlrk00012ounmbn7phru" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
+    <i class="icon-calendar"></i>
     
-<nav id="article-nav">
-  
-  
-    <a href="/2018/08/18/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Hello World</div>
-    </a>
-  
-</nav>
+    <time datetime="2018-08-18T01:59:52.000Z" itemprop="datePublished">2018-08-18</time>
+</a>
 
-  
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/javascript/">javascript</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <p>无限滚动常常用于移动端，是pc端分页在移动端的实现。<br>讲无限滚动之前先了解一下元素的尺寸，之前我经常搞混<code>offsetHeight</code>、<code>clientWidth</code>、<code>scrollHeight</code>等之间的关系。</p>
+<h3 id="offsetHeight"><a href="#offsetHeight" class="headerlink" title="offsetHeight"></a>offsetHeight</h3><blockquote>
+<p>1、元素在垂直方向上占据的空间大小（红宝书）<br>2、一种元素CSS高度的衡量标准，包括元素的边框、内边距和元素的水平滚动    条（如果存在且渲染的话），不包含:before或:after等伪类元素的高度。</p>
+</blockquote>
+<p>表示元素在屏幕上占据的<strong>可见的空间</strong>（个人认为是容器的大小）<br><img src="/2018/08/18/infinite-scroll/1.png" title="偏移量"></p>
+<h3 id="clientWidth"><a href="#clientWidth" class="headerlink" title="clientWidth"></a>clientWidth</h3><blockquote>
+<p>1、元素内容及其内边距所占据的空间大小<br>2、表示元素的内部宽度</p>
+</blockquote>
+<p>表示元素的内部大小，而<code>offsetHeight</code>指外部容器大小<br><img src="/2018/08/18/infinite-scroll/2.jpg" title="客户去大小"></p>
+<h3 id="scrollHeight"><a href="#scrollHeight" class="headerlink" title="scrollHeight"></a>scrollHeight</h3><blockquote>
+<p>1、包含滚动内容的元素大小<br>2、一个元素内容高度的度量，包括由于溢出导致的视图中不可见内容。</p>
+</blockquote>
+<p>一般指的是有滚动条的（<code>overflow:scroll</code>）的元素大小，如果元素内容的大小小于等于容器的大小，<code>scrollHeight</code>等于<code>clientHeight</code><br><img src="/2018/08/18/infinite-scroll/3.jpg" title="滚动大小"></p>
+<h3 id="无限滚动"><a href="#无限滚动" class="headerlink" title="无限滚动"></a>无限滚动</h3><p>以<code>vue</code>框架为例讲解无限滚动, 安装vue-cli脚手架<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm i -g @vue/cli</span><br><span class="line">vue create scroll-demo</span><br><span class="line">npm serve</span><br></pre></td></tr></table></figure></p>
+<p>主要代码如下：<br><img src="/2018/08/18/infinite-scroll/carbon.png" title="源码"><br>核心代码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'scroll'</span>, () =&gt; &#123;</span><br><span class="line">   <span class="keyword">const</span> el = <span class="built_in">document</span>.documentElement</span><br><span class="line">   <span class="keyword">if</span> (el.scrollTop + <span class="built_in">window</span>.innerHeight &gt;= el.scrollHeight * <span class="number">0.8</span>) &#123;</span><br><span class="line">       <span class="keyword">this</span>.fetchList()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure></p>
+<p>其实就是当滚动距离<code>scrollTop</code> + 整个屏幕的可是高度大于等于根元素的滚动高度（其实就是整个网页的高度），就去发送Ajax请求，在请求还未完成之时，如果还有滚动行为，此时也满足<code>el.scrollTop + window.innerHeight &gt;= el.scrollHeight * 0.8</code>就会一直触发Ajax请求，有时短时间内会触发几十个请求，我们需要阻止持续的请求。<br>很简单，加个开关，其实跟门上加个锁一样，我进来了就把门锁上，这样其他人进不来，等我出来了再把门打开。这里，我们加了<code>loading</code>，当请求还未完成时，我们设置<code>loading = true</code>，显示‘请稍后……’的提示语，在这段时间还有请求过来，我们就什么也不做返回。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="keyword">this</span>.loading || <span class="keyword">this</span>.endFlag)&#123;</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样就解决了满足<code>el.scrollTop + window.innerHeight &gt;= el.scrollHeight * 0.8</code>只会发送一次请求。<br>最后，结束的时候，最后一页，相同的情况，再加个开关<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="built_in">Math</span>.ceil(data.count / <span class="keyword">this</span>.pageSize) === <span class="keyword">this</span>.cpage) &#123;</span><br><span class="line">         <span class="keyword">this</span>.endFlag = <span class="literal">true</span></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+<p>总数量除以每页请求的数量等于当前页，就表示是最后一页了，此时我们<code>this.endFlag = true</code>阻止后续的请求，同时告诉用户‘已经到底啦~’<br>最后，无限滚动是每个前端童鞋都必须掌握的，很常用，这篇算是个人的一点小小总结吧!😁😁😁</p>
+
+        
+    </section>
 </article>
 
-</section>
-        
-          <aside id="sidebar">
-  
-    
-
-  
-    
-
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li></ul>
-    </div>
-  </div>
 
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2018/08/18/infinite-scroll/">infinite-scroll</a>
-          </li>
-        
-          <li>
-            <a href="/2018/08/18/hello-world/">Hello World</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2018 John Doe<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
 </footer>
+
+
     </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
     
+    <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+    
+    <script type="text/javascript">
+        $(function() {
+            var nodes = {
+                nav: $('#nav'),
+                aside: $('#aside'),
+                navTags: $('#nav-tags')
+            };
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+            $('#open-panel, #aside-mask').on('click', function() {
+                nodes.aside.toggleClass('panel-show');
+            });
+            $('#nav-tag').on('click', function(event) {
+                event.preventDefault();console.log(nodes.navTags.attr('class'))
+                nodes.navTags.toggleClass('tag-show');console.log(nodes.navTags.attr('class'))
+            })/*.hover(function() {
+                nodes.navTags.addClass('tag-show');
+            }, function() {
+                nodes.navTags.removeClass('tag-show');
+            });*/
 
+            
+            $(document.body).scrollspy({target: '#aside-inner'});
+            
+        });
+    </script>
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/script.js"></script>
-
-
-
-  </div>
 </body>
 </html>
